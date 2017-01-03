@@ -6,8 +6,8 @@ var React = require('react');
 import ReactNative, { View, Text, Navigator } from 'react-native';
 var SearchPage = require('./SearchPage');
 
-var firstVC = require('./firstVC');
-
+//var firstVC = require('./firstVC');
+var openingVC = require('./openingVC');
 var styles = ReactNative.StyleSheet.create({
     text: {
         color: 'black',
@@ -26,7 +26,7 @@ class  AwesomeProject extends React.Component {
         console.log('===one render===');
         //Navigation
         //madhu
-        return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: 'Property Finder', component: SearchPage,}}/>);
+        return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: '', component: openingVC,}}/>);
 
         //Rupali
 //        return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: 'firstVC', component: firstVC,}}/>);
