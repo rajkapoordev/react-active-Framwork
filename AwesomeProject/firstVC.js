@@ -15,7 +15,8 @@ import {
     ActivityIndicator,
     Image,
     Button,
-    Alert
+    Alert,
+    Navigator
 } from 'react-native';
 
 const
@@ -26,7 +27,7 @@ const
 class Greeting extends Component {
     render() {
         return (
-            <Text>Hello {this.props.username}!</Text>
+            <Text style={styleText.bigblue} >Hello {this.props.username}!</Text>
         );
     }
 }
@@ -53,21 +54,25 @@ class firstVC extends Component {
 
     render() {
         console.log('===SearchPage render===');
-
+        let pic = {
+            uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+        };
         return (
             // Try setting `alignItems` to 'flex-start'
             // Try setting `justifyContent` to `flex-end`.
             // Try setting `flexDirection` to `row`.
+
+
             <View style={{
                 flex: 1,
-                flexDirection: 'column',
+
                 alignItems: 'center',
                 marginTop: 65,
             }}>
-                <Greeting style={styleText.bigblue} username='ABC'/>
+                <Greeting  username='ABC'/>
                 <Greeting username='DEF'/>
                 <Greeting username='GHI'/>
-                <View style={styleText.red}>
+                <View>
                     <Blink textvalue='Blink1'/>
                     <Blink textvalue='Blink2'/>
                     <Blink textvalue='Blink3'/>
@@ -75,6 +80,17 @@ class firstVC extends Component {
                 <View>
                     <Button title='Go' onPress={onButtonPress}/>
                 </View>
+
+                <Image source={pic} style={{width: 193, height: 110}}/>
+                <TextInput
+                    style={{height: 40,borderWidth: 1,
+                        borderColor: 'blue', marginTop:10 }}
+                    placeholder="Type here to translate!"
+                    onChangeText={(text) =>{
+                        console.log('===two render===');
+                        return this.setState({text})} }
+                />
+
             </View>
         );
     }
@@ -82,18 +98,16 @@ class firstVC extends Component {
 
 }
 
-
 var styleText = StyleSheet.create({
     bigblue: {
-        // color: 'blue',
-        // fontWeight: 'bold',
-        // fontSize: 30,
-        borderWidth: 1,
-        borderColor: 'blue',
+         color: 'blue',
+         fontWeight: 'bold',
+         fontSize: 30,
+
     },
     red: {
-        borderWidth: 1,
-        borderColor: 'red',
+        fontWeight: 'bold',
+         fontSize: 30,
     },
 });
 module.exports = firstVC;
