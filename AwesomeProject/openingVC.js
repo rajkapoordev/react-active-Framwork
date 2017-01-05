@@ -14,6 +14,8 @@ import {
     TouchableHighlight
 } from 'react-native';
 var shopPageVC = require('./shopPageVC');
+var loginVC = require('./Login');
+
 class openingVC extends Component {
 
     onButtonPress(event){
@@ -22,8 +24,8 @@ class openingVC extends Component {
 
     onSignInClicked(event){
         this.props.navigator.push({
-            title: 'Shop Page',
-            component:shopPageVC,
+            title: 'Login',
+            component:loginVC,
             navigationBarHidden:true
         })
     }
