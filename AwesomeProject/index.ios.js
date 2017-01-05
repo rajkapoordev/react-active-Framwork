@@ -4,11 +4,8 @@ import  MyScene from  './MyScene';
 var React = require('react');
 //var ReactNative = require('react-native');
 import ReactNative, { View, Text, Navigator } from 'react-native';
-var SearchPage = require('./SearchPage');
-var Login = require('./Login');
 
-var firstVC = require('./firstVC');
-
+var openingVC = require('./openingVC');
 var styles = ReactNative.StyleSheet.create({
     text: {
         color: 'black',
@@ -24,14 +21,7 @@ var styles = ReactNative.StyleSheet.create({
 
 class  AwesomeProject extends React.Component {
     render(){
-        console.log('===one render===');
-        //Navigation
-        //madhu
-       // return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: 'Property Finder', component: SearchPage,}}/>);
-
-        //Rupali
-        // return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: 'firstVC', component: firstVC,}}/>);
-        return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: 'Login', component: Login,navigationBarHidden: true}}/>);
+        return (<ReactNative.NavigatorIOS style={styles.container} initialRoute={{title: '', component: openingVC, navigationBarHidden: true}}/>);
     }
 }
 
