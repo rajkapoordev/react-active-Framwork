@@ -19,13 +19,10 @@ import {
     TouchableHighlight,
 } from 'react-native';
 var ScrollView = require('ScrollView')
-const onButtonPress = () => {
-    Alert.alert('Button has been pressed!');
-};
+var FirstVC = require('./firstVC');
 
 class Login extends  Component
 {
-
     constructor(props)
     {
         super(props);
@@ -42,49 +39,60 @@ class Login extends  Component
 
     renderLoginView()
     {
+        var _scrollView: ScrollView;
+
         return(
-            <ScrollView
-                ref='scroll'
-                style={styles.container}
-                keyboardDismissMode={'on-drag'}
-            >
-                <View style={{alignSelf: 'stretch'}}>
+        <ScrollView
+                ref={(scrollVw) => { _scrollView = scrollVw; }}
+                keyboardShouldPersistTaps = {true}
+                style={styles.container}>
+                <View style={{alignSelf: 'stretch',marginTop:65}}>
                     <Image source={require('./ios/Resources/hanger.png')} style={styles.image}/>
                     <Text style={styles.welcome}>Welcome back!</Text>
                     <Text style={styles.detail}>Please enter your details:</Text>
                     <TextInput
                         style={styles.emailText}
                         placeholder="Email Address"
+                        returnKeyType = {"next"}
+                        ref="txtEmail"
+                        autoCorrect = {false}
                         onChangeText={(text) => this.setState({emailAddress:text})}
-                       // onFocus={this.textInputFocused.bind(this)}
+                        onSubmitEditing={(event) => { this.refs.txtPassword.focus(); }}
+                        onFocus={() => {_scrollView.scrollTo({y: 30}); }}
                     />
                     <TextInput
-                        style={styles.emailText}
+                        style={styles.passwordText}
                         placeholder="Password"
+                        ref="txtPassword"
+                        autoCorrect = {false}
+                        returnKeyType = {"done"}
                         secureTextEntry={true}
                         onChangeText={(text) => this.setState({password:text})}
-
+                        onFocus={() => { _scrollView.scrollTo({y: 30});}}
+                        onSubmitEditing={()=>{_scrollView.scrollTo({y:-21})}}
                     />
                     <TouchableHighlight
                         style={styles.signinButton}
-                        onPress={this.onLoginPressed.bind(this)}
                         underlayColor={'#18B3AF'}
-                        >
+                        onPress={this.onLoginPressed.bind(this)}
+                    >
                         <Text style={styles.signinText} onPress={this.onLoginPressed.bind(this)}>Sign In</Text>
                     </TouchableHighlight>
                     <View style={styles.signupView}>
                         <Text style={{fontSize: 15, color:'#A3A6AE'}}>Don’t have an account?</Text>
                         <Button
-                            onPress={this.onSignupPressed.bind(this)}
                             title='Sign Up'
                             color='#18B3AF'
                             accessibilityLabel="Signup"
+                            onPress={this.onSignupPressed.bind(this)}
                         />
                     </View>
                 </View>
             </ScrollView>
         );
     }
+
+    //Actions
     onLoginPressed(event)
     {
         if(!validateEmail(this.state.emailAddress))
@@ -102,22 +110,38 @@ class Login extends  Component
     }
     onSignupPressed(event)
     {
-            Alert.alert('Go to Signup');
-    }
-    textInputFocused ()
-    {
-        this.refs.scroll.scrollToPosition(0, 0, true)
+        //Push to Signup page
+        this.props.navigator.push({
+            title: 'Signup',
+            component:FirstVC,
+            navigationBarHidden:true
+        })
     }
 
+    //other way to access referencee
+    /*
+    textInputFocused(event)
+    {
+        this.refs.scrollView.scrollTo({x: 0, y: 30, animated: true})
+    }
+    resetScrolling(event)
+    {
+        this.refs.scrollView.scrollTo({x: 0, y: -30, animated: true})
+    }
+    */
 }
+
+//methods
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+//Stylesheet
 var styles = StyleSheet.create({
     container: {
-        marginTop: 65,
-        flex:1,
+        marginTop:15,
+        flex:1
         // borderWidth: 1,
         // borderColor: 'red'
     },
@@ -125,34 +149,33 @@ var styles = StyleSheet.create({
         width: 100,
         height: 100,
         marginTop: 15,
-        alignSelf: 'center',
-
-        // borderWidth: 1,
-        // borderColor: 'red'
+        alignSelf: 'center'
     },
     welcome:{
         fontSize: 32,
         marginTop: 15,
         textAlign: 'center',
         color: 'black',
-        alignSelf: 'center',
-        // borderWidth: 1,
-        // borderColor: 'red'
+        alignSelf: 'center'
     },
     detail:{
         fontSize: 16,
         marginTop: 45,
         textAlign: 'center',
         color: 'grey',
-        alignSelf: 'center',
-        // borderWidth: 1,
-        // borderColor: 'red'
+        alignSelf: 'center'
     },
     emailText:{
         backgroundColor:'#F5F5F6',
         textAlign: 'center',
-        // borderWidth: 1,
-        // borderColor: 'red',
+        height: 50,
+        marginLeft:40,
+        marginRight:40,
+        marginTop:20
+    },
+    passwordText:{
+        backgroundColor:'#F5F5F6',
+        textAlign: 'center',
         height: 50,
         marginLeft:40,
         marginRight:40,
@@ -161,8 +184,6 @@ var styles = StyleSheet.create({
     signinButton:{
         backgroundColor:'#18B3AF',
         flex:1,
-        // borderWidth: 1,
-        // borderColor: 'red',
         alignSelf: 'stretch',
         justifyContent: 'center',
         marginTop: 40,
@@ -174,9 +195,7 @@ var styles = StyleSheet.create({
     signinText:{
         fontSize: 22,
         color: 'white',
-        alignSelf: 'center',
-        // borderWidth: 1,
-        // borderColor: 'red'
+        alignSelf: 'center'
     },
     signupView:{
         flexDirection: 'row',
@@ -184,7 +203,6 @@ var styles = StyleSheet.create({
         marginTop: 20,
         alignSelf: 'center'
     },
-
 });
 
 module.exports = Login;

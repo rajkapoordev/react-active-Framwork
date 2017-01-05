@@ -38,9 +38,9 @@ class Blink extends Component {
         this.state = {showText: true};
 
         // Toggle the state every second
-        setInterval(() => {
-            this.setState({ showText: !this.state.showText });
-        }, 1000);
+        // setInterval(() => {
+        //     this.setState({ showText: !this.state.showText });
+        // }, 1000);
     }
 
     render() {
@@ -52,11 +52,24 @@ class Blink extends Component {
 }
 class firstVC extends Component {
 
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            isLoading: false
+        };
+    }
+    onBackPressed(event)
+    {
+        this.props.navigator.pop();
+    }
     render() {
         console.log('===SearchPage render===');
+
         let pic = {
             uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
         };
+
         return (
             // Try setting `alignItems` to 'flex-start'
             // Try setting `justifyContent` to `flex-end`.
@@ -65,7 +78,6 @@ class firstVC extends Component {
 
             <View style={{
                 flex: 1,
-
                 alignItems: 'center',
                 marginTop: 65,
             }}>
@@ -78,7 +90,7 @@ class firstVC extends Component {
                     <Blink textvalue='Blink3'/>
                 </View>
                 <View>
-                    <Button title='Go' onPress={onButtonPress}/>
+                    <Button title='Go' onPress={this.onBackPressed.bind(this)}/>
                 </View>
 
                 <Image source={pic} style={{width: 193, height: 110}}/>
