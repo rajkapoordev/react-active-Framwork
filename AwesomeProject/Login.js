@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 var ScrollView = require('ScrollView')
 var FirstVC = require('./firstVC');
-
+var shopPageVC = require('./shopPageVC');
 class Login extends  Component
 {
     constructor(props)
@@ -105,7 +105,11 @@ class Login extends  Component
         }
         else
         {
-            Alert.alert('Success');
+            this.props.navigator.push({
+                title: 'shopPageVC',
+                component:shopPageVC,
+                navigationBarHidden:true
+            })
         }
     }
     onSignupPressed(event)

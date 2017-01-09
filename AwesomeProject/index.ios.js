@@ -1,6 +1,5 @@
 'use strict';
 
-import  MyScene from  './MyScene';
 var React = require('react');
 //var ReactNative = require('react-native');
 import ReactNative, { View, Text, Navigator } from 'react-native';
